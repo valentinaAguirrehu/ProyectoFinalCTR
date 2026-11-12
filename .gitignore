@@ -1,0 +1,25 @@
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dataset original y procesado
+data/raw/*
+data/processed/*
+!data/raw/README.md
+!data/processed/README.md
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Variables de entorno
+.env
