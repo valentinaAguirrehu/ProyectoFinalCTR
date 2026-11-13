@@ -70,4 +70,4 @@ El tamaño combinado de los tres Parquet es aproximadamente **133 MiB**, frente 
 3. Ejecutar [`notebooks/03_preparacion_datos.ipynb`](../notebooks/03_preparacion_datos.ipynb) de principio a fin.
 4. Revisar `split_summary.csv`, `manifest.json` y las tres carpetas Parquet antes de entrenar.
 
-`data/processed/` está excluido de Git por el tamaño de los datos. Las particiones se generan localmente y deben adjuntarse por el medio de entrega que indique el curso si se solicitan junto con el código. El notebook no sobrescribe salidas existentes con manifiestos diferentes.
+La carpeta `data/processed/ctr_phase3/`, que contiene las tres particiones Parquet, `manifest.json` y `split_summary.csv`, está incluida en este repositorio. El TSV original no se incluye en Git por su tamaño; descárgalo desde [Kaggle: Criteo Attribution Modeling](https://www.kaggle.com/datasets/sharatsachin/criteo-attribution-modeling) y guárdalo como `data/raw/pcb_dataset_final.tsv` si necesitas reproducir el procesamiento. El notebook no sobrescribe salidas existentes con manifiestos diferentes.
