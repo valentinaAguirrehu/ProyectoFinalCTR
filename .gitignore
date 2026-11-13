@@ -16,6 +16,8 @@ data/raw/*
 data/processed/*
 !data/raw/README.md
 !data/processed/README.md
+!data/processed/ctr_phase3/
+!data/processed/ctr_phase3/**
 
 # Sistema operativo
 .DS_Store

@@ -46,5 +46,8 @@ Fuente: https://www.kaggle.com/datasets/sharatsachin/criteo-attribution-modeling
 - docs/: documentación de CRISP-DM.
 
 ## Integrantes
-
+Leidy valentina aguirre 
+Angie Fernanda Benavides
+Jesús David Villota
+Camila Isabel Bastidas
 Proyecto académico de Minería de Datos.

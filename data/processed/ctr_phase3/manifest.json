@@ -1,0 +1,93 @@
+{
+  "source": {
+    "name": "pcb_dataset_final.tsv",
+    "size_bytes": 2589891984,
+    "modified_ns": 1794518169123587400
+  },
+  "config": {
+    "target": "click",
+    "features": [
+      "timestamp",
+      "campaign",
+      "cat1",
+      "cat2",
+      "cat3",
+      "cat4",
+      "cat5",
+      "cat6",
+      "cat7",
+      "cat8",
+      "cat9"
+    ],
+    "categorical_features": [
+      "campaign",
+      "cat1",
+      "cat2",
+      "cat3",
+      "cat4",
+      "cat5",
+      "cat6",
+      "cat7",
+      "cat8",
+      "cat9"
+    ],
+    "excluded_reasons": {
+      "uid": "identificador de usuario; riesgo de memorizacion y sobreajuste",
+      "conversion": "resultado posterior a la impresion; fuga de informacion potencial",
+      "conversion_timestamp": "momento de conversion posterior",
+      "conversion_id": "identificador de conversion posterior",
+      "attribution": "resultado de atribucion asociado a una conversion",
+      "click_pos": "posicion de clic relacionada con el recorrido posterior",
+      "click_nb": "conteo de clics relacionado con el recorrido posterior",
+      "cpo": "costo por pedido, disponible despues de un resultado de conversion",
+      "cost": "disponibilidad en el momento de impresion no confirmada",
+      "time_since_last_click": "disponibilidad temporal y calculo no confirmados"
+    },
+    "split_ratios": {
+      "train": 0.7,
+      "validation": 0.15,
+      "test": 0.15
+    },
+    "split_method": "quantile_disc por timestamp, sin dividir empates",
+    "parquet_compression": "ZSTD"
+  },
+  "temporal_cutoffs": {
+    "train_end_inclusive": 1848196,
+    "validation_end_inclusive": 2269328,
+    "timestamp_min": 0,
+    "timestamp_max": 2671199
+  },
+  "split_summary": [
+    {
+      "split": "train",
+      "filas": 11527626,
+      "porcentaje_dataset": 70.00004311384721,
+      "click_0": 7397325,
+      "click_1": 4130301,
+      "click_1_porcentaje": 35.82958885029754,
+      "timestamp_min": 0,
+      "timestamp_max": 1848196
+    },
+    {
+      "split": "validation",
+      "filas": 2470203,
+      "porcentaje_dataset": 14.999993624008512,
+      "click_0": 1556926,
+      "click_1": 913277,
+      "click_1_porcentaje": 36.971738759931874,
+      "timestamp_min": 1848197,
+      "timestamp_max": 2269328
+    },
+    {
+      "split": "test",
+      "filas": 2470198,
+      "porcentaje_dataset": 14.999963262144275,
+      "click_0": 1566213,
+      "click_1": 903985,
+      "click_1_porcentaje": 36.59564941757705,
+      "timestamp_min": 2269329,
+      "timestamp_max": 2671199
+    }
+  ],
+  "output_format": "Parquet partitioned by split, ZSTD compression"
+}
