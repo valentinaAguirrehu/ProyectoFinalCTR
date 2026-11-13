@@ -38,4 +38,4 @@ La fase 2 no modifica el dataset ni crea particiones. En la fase 3 se deberá:
 
 ## Reproducibilidad
 
-Instala las dependencias desde la raíz del proyecto con `pip install -r requirements.txt`, confirma que `data/raw/pcb_dataset_final.tsv` está disponible y ejecuta [`notebooks/02_comprension_datos.ipynb`](../notebooks/02_comprension_datos.ipynb) de arriba hacia abajo. El análisis global y la comprobación de duplicados pueden tardar por el tamaño del archivo.
+Descarga `pcb_dataset_final.tsv` desde [Kaggle: Criteo Attribution Modeling](https://www.kaggle.com/datasets/sharatsachin/criteo-attribution-modeling) y ubícalo en `data/raw/pcb_dataset_final.tsv`. El archivo original no se incluye en Git por su tamaño. Instala las dependencias desde la raíz con `pip install -r requirements.txt` y ejecuta [`notebooks/02_comprension_datos.ipynb`](../notebooks/02_comprension_datos.ipynb) de arriba hacia abajo. El análisis global y la comprobación de duplicados pueden tardar por el tamaño del archivo.
