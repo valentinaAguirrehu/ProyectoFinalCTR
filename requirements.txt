@@ -13,6 +13,7 @@ pyarrow
 catboost
 xgboost  # en macOS requiere OpenMP: brew install libomp
 joblib
+optuna  # optimizacion de hiperparametros
 
 # Backend / API
 fastapi
