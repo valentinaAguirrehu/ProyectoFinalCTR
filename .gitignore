@@ -25,3 +25,9 @@ Thumbs.db
 
 # Variables de entorno
 .env
+
+# Artefactos de modelos (se regeneran con: python -m src.ml.train)
+models/
+
+# Pruebas
+.pytest_cache/
