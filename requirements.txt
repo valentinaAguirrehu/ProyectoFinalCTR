@@ -1,4 +1,4 @@
-
+# Analisis y preparacion de datos
 pandas
 numpy
 matplotlib
@@ -7,3 +7,18 @@ scikit-learn
 jupyter
 ipykernel
 duckdb
+pyarrow
+
+# Modelado
+catboost
+xgboost  # en macOS requiere OpenMP: brew install libomp
+joblib
+
+# Backend / API
+fastapi
+uvicorn[standard]
+pydantic>=2
+
+# Pruebas
+pytest
+httpx
