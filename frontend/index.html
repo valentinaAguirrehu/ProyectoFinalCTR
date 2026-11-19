@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Predicción de CTR · Simulador y dashboard</title>
+  <meta name="description" content="Simulador de anuncios digitales y dashboard de rendimiento para estimar la probabilidad de clic con los modelos del proyecto.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <p class="eyebrow">Minería de datos · CRISP-DM · Despliegue</p>
+        <h1>Predicción de CTR</h1>
+        <p class="lede">Simula un anuncio, estima la probabilidad de clic y compara el rendimiento de los modelos.</p>
+      </div>
+      <form id="api-form" class="connect">
+        <label for="api-base">Dirección de la API</label>
+        <div class="connect-row">
+          <input id="api-base" name="api-base" type="url" spellcheck="false" autocomplete="off" value="http://127.0.0.1:8000" required>
+          <button type="submit">Conectar</button>
+        </div>
+        <p id="api-status" class="status" data-state="pending">Sin conectar</p>
+      </form>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="nav" aria-label="Secciones">
+      <button type="button" data-nav="simulator" aria-current="page">Simulador</button>
+      <button type="button" data-nav="compare">Comparar modelos</button>
+      <button type="button" data-nav="dashboard">Dashboard</button>
+    </nav>
+
+    <main id="contenido">
+      <section data-view="simulator" aria-labelledby="sim-title">
+        <header class="section-head">
+          <h2 id="sim-title">Simulador de anuncios</h2>
+          <p>Ingresa las once características anonimizadas de una impresión. La tarjeta es una vista simulada: el modelo no lee el texto creativo, solo los códigos.</p>
+        </header>
+
+        <div class="simulator">
+          <form id="ad-form" class="panel">
+            <div class="panel-head">
+              <h3>Características del anuncio</h3>
+              <div class="preset-row" id="preset-list">
+                <button type="button" data-preset="retail">Casa Norte</button>
+                <button type="button" data-preset="tech">Nodo Lab</button>
+                <button type="button" data-preset="travel">Ruta Clara</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="model-select">Modelo</label>
+              <select id="model-select">
+                <option value="">Predeterminado</option>
+              </select>
+              <small class="hint">Si lo dejas en predeterminado, la API usa el modelo con mejor AUC de validación.</small>
+              <small id="model-load-errors" class="error"></small>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="timestamp">Tiempo</label>
+                <input id="timestamp" name="timestamp" type="text" inputmode="numeric" autocomplete="off" value="2288076" aria-describedby="hint-timestamp">
+                <small class="hint" id="hint-timestamp">Segundos desde el inicio del periodo</small>
+                <small class="error" data-error-for="timestamp"></small>
+              </div>
+              <div class="field">
+                <label for="campaign">Campaña</label>
+                <input id="campaign" name="campaign" type="text" inputmode="numeric" autocomplete="off" value="787943" aria-describedby="hint-campaign">
+                <small class="hint" id="hint-campaign">Código anonimizado</small>
+                <small class="error" data-error-for="campaign"></small>
+              </div>
+              <div class="field">
+                <label for="cat1">Categoría 1</label>
+                <input id="cat1" name="cat1" type="text" inputmode="numeric" autocomplete="off" value="30763035">
+                <small class="error" data-error-for="cat1"></small>
+              </div>
+              <div class="field">
+                <label for="cat2">Categoría 2</label>
+                <input id="cat2" name="cat2" type="text" inputmode="numeric" autocomplete="off" value="32440040">
+                <small class="error" data-error-for="cat2"></small>
+              </div>
+              <div class="field">
+                <label for="cat3">Categoría 3</label>
+                <input id="cat3" name="cat3" type="text" inputmode="numeric" autocomplete="off" value="11426249">
+                <small class="error" data-error-for="cat3"></small>
+              </div>
+              <div class="field">
+                <label for="cat4">Categoría 4</label>
+                <input id="cat4" name="cat4" type="text" inputmode="numeric" autocomplete="off" value="29196072">
+                <small class="error" data-error-for="cat4"></small>
+              </div>
+              <div class="field">
+                <label for="cat5">Categoría 5</label>
+                <input id="cat5" name="cat5" type="text" inputmode="numeric" autocomplete="off" value="32440044">
+                <small class="error" data-error-for="cat5"></small>
+              </div>
+              <div class="field">
+                <label for="cat6">Categoría 6</label>
+                <input id="cat6" name="cat6" type="text" inputmode="numeric" autocomplete="off" value="1973606">
+                <small class="error" data-error-for="cat6"></small>
+              </div>
+              <div class="field">
+                <label for="cat7">Categoría 7</label>
+                <input id="cat7" name="cat7" type="text" inputmode="numeric" autocomplete="off" value="25459503">
+                <small class="error" data-error-for="cat7"></small>
+              </div>
+              <div class="field">
+                <label for="cat8">Categoría 8</label>
+                <input id="cat8" name="cat8" type="text" inputmode="numeric" autocomplete="off" value="32440044">
+                <small class="error" data-error-for="cat8"></small>
+              </div>
+              <div class="field">
+                <label for="cat9">Categoría 9</label>
+                <input id="cat9" name="cat9" type="text" inputmode="numeric" autocomplete="off" value="29196072">
+                <small class="error" data-error-for="cat9"></small>
+              </div>
+            </div>
+
+            <p class="form-note">Campaña y categorías son códigos de Criteo, entre 0 y 2.147.483.647. No envíes usuario, costo ni conversión: la API los rechaza.</p>
+            <p id="sim-message" class="banner" hidden></p>
+
+            <div class="actions">
+              <button id="estimate" type="submit">Estimar probabilidad</button>
+              <button id="clear-form" class="secondary" type="button">Limpiar</button>
+            </div>
+          </form>
+
+          <div class="preview-column">
+            <article class="ad-shell panel">
+              <p class="eyebrow">Vista previa simulada</p>
+              <div class="ad-meta">
+                <span class="avatar" aria-hidden="true"></span>
+                <div>
+                  <strong id="ad-brand">Casa Norte</strong>
+                  <span>Patrocinado</span>
+                </div>
+              </div>
+              <div class="ad-visual" id="ad-visual" data-tone="warm">
+                <p class="kicker" id="ad-kicker">Hogar · patrocinado</p>
+                <h3 id="ad-headline">Renueva tu sala esta semana</h3>
+                <p id="ad-copy">Selección de temporada con envío a tu ciudad.</p>
+              </div>
+              <p id="ad-cta" class="cta">Ver la colección</p>
+            </article>
+
+            <section class="panel result" aria-live="polite">
+              <h3>Probabilidad estimada</h3>
+              <p id="result-empty">Pulsa «Estimar probabilidad» para consultar el modelo.</p>
+              <p id="result-stale" class="banner" data-kind="info" hidden>Los datos cambiaron. Vuelve a estimar para actualizar la probabilidad.</p>
+              <div id="result-panel" hidden>
+                <div class="result-row">
+                  <div id="result-gauge" class="gauge" style="--p: 0"><span>—</span></div>
+                  <div>
+                    <p id="result-decision" class="decision" data-click="no">Sin clic esperado</p>
+                    <p class="muted">Modelo <strong id="result-model">—</strong> · versión <span id="result-version">—</span></p>
+                    <p class="muted">Umbral de decisión: <strong id="result-threshold">—</strong>. Hay clic esperado cuando la probabilidad es mayor o igual a ese umbral.</p>
+                    <p class="request">Solicitud <span id="result-request">—</span></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <section class="panel scenarios">
+          <div class="panel-head">
+            <div>
+              <h3>Tres anuncios, un mismo modelo</h3>
+              <p class="muted">Evalúa los escenarios de demostración y ordénalos por probabilidad de clic.</p>
+            </div>
+            <button id="rank-scenarios" type="button">Evaluar escenarios</button>
+          </div>
+          <p id="scenario-summary" class="muted" hidden></p>
+          <div id="scenario-results" class="rank-grid"></div>
+        </section>
+      </section>
+
+      <section data-view="compare" hidden aria-labelledby="compare-title">
+        <header class="section-head">
+          <h2 id="compare-title">Comparar modelos</h2>
+          <p>El anuncio del simulador se envía a cada modelo cargado, por ejemplo XGBoost, CatBoost y la regresión logística si está disponible.</p>
+        </header>
+        <div class="panel compare-bar">
+          <p>Se usan los once valores que están ahora en el formulario.</p>
+          <button id="run-compare" type="button">Comparar con todos los modelos</button>
+        </div>
+        <p id="compare-message" class="banner" data-kind="error" hidden></p>
+        <div id="compare-results" hidden>
+          <ul id="compare-codes" class="code-list"></ul>
+          <div id="compare-cards" class="rank-grid"></div>
+          <div class="chart-box panel">
+            <h3>Probabilidad de clic por modelo</h3>
+            <div class="chart-frame">
+              <canvas id="compare-chart" aria-label="Barras de probabilidad de clic por modelo"></canvas>
+            </div>
+            <p id="compare-chart-note" class="muted" hidden></p>
+          </div>
+        </div>
+      </section>
+
+      <section data-view="dashboard" hidden aria-labelledby="dash-title">
+        <header class="section-head dash-head">
+          <div>
+            <h2 id="dash-title">Dashboard de rendimiento</h2>
+            <p>Indicadores de XGBoost, CatBoost y los demás modelos cargados, junto con el resumen del dataset y el uso de la API.</p>
+          </div>
+          <button id="refresh-dashboard" class="secondary" type="button">Actualizar</button>
+        </header>
+        <p id="dashboard-status" class="banner" hidden></p>
+
+        <div id="usage-cards" class="stat-grid"></div>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h3>Métricas de los modelos</h3>
+            <div class="segmented" role="group" aria-label="Partición">
+              <button type="button" data-split="test" aria-pressed="true">Prueba</button>
+              <button type="button" data-split="validation" aria-pressed="false">Validación</button>
+            </div>
+          </div>
+          <p id="best-model" class="callout" hidden></p>
+          <p id="metrics-empty" class="muted">Aún no hay métricas para mostrar.</p>
+          <div class="table-wrap">
+            <table id="metrics-table"></table>
+          </div>
+          <div id="metrics-chart-box" class="chart-frame tall" hidden>
+            <canvas id="metrics-chart" aria-label="Comparación de métricas entre modelos"></canvas>
+          </div>
+          <p id="metrics-chart-note" class="muted" hidden>No se pudo dibujar la gráfica. La tabla conserva los indicadores.</p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h3>Importancia de variables</h3>
+            <label class="inline-select">
+              Modelo
+              <select id="importance-model"></select>
+            </label>
+          </div>
+          <p id="importance-empty" class="muted" hidden></p>
+          <div class="chart-frame tall">
+            <canvas id="importance-chart" aria-label="Importancia de cada variable"></canvas>
+          </div>
+          <p id="importance-chart-note" class="muted" hidden></p>
+        </section>
+
+        <section class="panel">
+          <h3>Dataset preparado</h3>
+          <div id="dataset-panel"><p class="muted">Cargando resumen…</p></div>
+        </section>
+
+        <section class="panel">
+          <h3>Uso de la API en esta sesión</h3>
+          <ul id="usage-by-model" class="plain-list"></ul>
+          <p id="recent-empty" class="muted">Todavía no hay predicciones recientes.</p>
+          <div class="table-wrap">
+            <table id="recent-table"></table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Universidad Cooperativa de Colombia · Proyecto de predicción de CTR.</p>
+      <p>Interfaz, simulador y dashboard: Angie Fernanda Benavides. Preparación de datos: Leidy Valentina Aguirre. Modelos: Jesús David Villota Arteaga. API: Camila Isabel Bastidas.</p>
+    </footer>
+  </div>
+
+  <noscript>
+    <p class="banner" data-kind="error">Activa JavaScript para usar el simulador y el dashboard.</p>
+  </noscript>
+  <script src="vendor/chart.umd.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
