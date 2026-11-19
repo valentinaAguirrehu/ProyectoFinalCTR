@@ -49,8 +49,9 @@ Fuente: https://www.kaggle.com/datasets/sharatsachin/criteo-attribution-modeling
   - src/ml/: modelos, entrenamiento, evaluación y registro.
   - src/api/: backend FastAPI (endpoints, servicios, validación).
 - models/: artefactos entrenados (generados localmente, no versionados).
-- tests/: pruebas de la API.
-- docs/: documentación de CRISP-DM y de la API.
+- tests/: pruebas de la API y del contrato de la interfaz.
+- docs/: documentación de CRISP-DM, de la API y del frontend.
+- frontend/: simulador de anuncios, comparación de modelos y dashboard.
 
 ## Backend y API de predicción
 
@@ -62,6 +63,22 @@ pytest                            # pruebas
 ```
 
 Documentación completa: [docs/backend_api.md](docs/backend_api.md).
+
+## Frontend: simulador y dashboard
+
+Interfaz web en HTML, CSS y JavaScript. No requiere Node. Hay que abrirla con un servidor local: si se abre el archivo directamente, el navegador puede bloquear los módulos.
+
+```bash
+# Terminal 1, en la raíz del proyecto
+uvicorn src.api.main:app --reload
+
+# Terminal 2
+python -m http.server 5500 --directory frontend
+```
+
+Abrir <http://127.0.0.1:5500>. La pantalla permite cambiar la dirección de la API si no está en `http://127.0.0.1:8000`.
+
+Documentación del módulo: [docs/frontend.md](docs/frontend.md).
 
 ## Integrantes
 Leidy valentina aguirre 
