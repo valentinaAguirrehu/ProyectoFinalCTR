@@ -70,6 +70,25 @@ Opciones del entrenamiento: `--train-rows` (por defecto 1.000.000; `0` = partici
 | `CTR_PREDICTION_LOG_SIZE` | `500` | Predicciones recientes guardadas en memoria. |
 | `CTR_CORS_ORIGINS` | `*` | Orígenes permitidos, separados por comas. |
 
+## Despliegue recomendado: frontend en Vercel y API en Render
+
+La función de Vercel para la API superó el límite de tamaño del bundle (500 MB) por las dependencias de CatBoost y los datos del proyecto. Mantén en Vercel solo el frontend estático y ejecuta esta API como un servicio web de Python en Render.
+
+### API en Render
+
+1. Crea un **Web Service** desde el repositorio `valentinaAguirrehu/ProyectoFinalCTR`, rama `main`, dejando el directorio raíz vacío.
+2. Configura:
+   - **Build Command:** `pip install -r requirements-api.txt`
+   - **Start Command:** `uvicorn src.api.main:app --host 0.0.0.0 --port $PORT`
+3. En las variables de entorno, define `CTR_CORS_ORIGINS` con el dominio público del frontend de Vercel, por ejemplo `https://<tu-dominio>.vercel.app`.
+4. Cuando Render entregue la URL del servicio, comprueba `/health`, `/api/v1/models` y `/docs`.
+
+`requirements-api.txt` incluye solo las dependencias usadas para servir la API y cargar el modelo CatBoost. El directorio `models/catboost/` versionado contiene `model.cbm` y `metadata.json`.
+
+### Frontend estático en Vercel
+
+En **Project Settings → Build and Deployment**, cambia **Root Directory** a `frontend`, el preset a **Other**, deja vacío el comando de compilación y usa `.` como directorio de salida si Vercel lo solicita. Después de desplegar, abre la web, pega la URL del servicio Render (sin `/api/v1`) en **Dirección de la API** y pulsa **Conectar**.
+
 ## 3. Endpoints
 
 Prefijo: `/api/v1` (salvo `/health`).
@@ -162,6 +181,8 @@ Resultados del entrenamiento de referencia (`python -m src.ml.train`: 1.000.000 
 | `catboost` (por defecto) | 0,6926 | 0,5667 | 0,6002 | 0,5785 | 0,286 |
 | `logistic_regression` (línea base) | 0,6807 | 0,5527 | 0,6080 | 0,5707 | 0,291 |
 
+La tabla muestra resultados de referencia, no los del artefacto de demostración desplegado. Este último se entrenó con 250.000 filas de entrenamiento y 100.000 de validación y prueba: AUC de validación **0,6793**, AUC de prueba **0,6823**, F1 de prueba **0,5705** y umbral **0,2886**.
+
 Las variables más importantes para CatBoost son `cat3`, `cat9`, `cat6` y `cat8`. Las cifras se pueden consultar en vivo en `/api/v1/metrics/models`. La optimización de hiperparámetros corresponde a la fase de Modelado; la API cargará automáticamente cualquier modelo mejorado que se guarde en `models/`.
 
 ### Formato de artefacto
@@ -173,7 +194,7 @@ models/<nombre>/
 └── metadata.json                           # name, version, algorithm, threshold, features, training, metrics
 ```
 
-`models/` está excluido de Git (el modelo CatBoost ocupa ~74 MB); se regenera con `python -m src.ml.train`.
+`models/` se excluye normalmente de Git para evitar subir artefactos grandes. El modelo CatBoost de demostración en `models/catboost/` está versionado explícitamente para que Render lo cargue; si se genera otro modelo, hay que integrarlo de forma deliberada y revisar su tamaño.
 
 ## 6. Pruebas
 
