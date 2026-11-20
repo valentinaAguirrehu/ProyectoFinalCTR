@@ -31,3 +31,6 @@ models/
 
 # Pruebas
 .pytest_cache/
+
+# Carpeta generada para el despliegue
+build/

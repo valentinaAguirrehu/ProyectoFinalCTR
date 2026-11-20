@@ -1,5 +1,9 @@
 const STORAGE_KEY = "ctr.apiBase";
-const DEFAULT_BASE = "http://127.0.0.1:8000";
+const LOCAL_BASE = "http://127.0.0.1:8000";
+const IS_LOCAL = ["localhost", "127.0.0.1", ""].includes(location.hostname);
+// En producción (Vercel) se usa la URL de la API publicada en <meta name="ctr-api-base">.
+const DEPLOYED_BASE = document.querySelector('meta[name="ctr-api-base"]')?.content.trim() || "";
+const DEFAULT_BASE = IS_LOCAL || !DEPLOYED_BASE ? LOCAL_BASE : DEPLOYED_BASE;
 
 export class ApiError extends Error {
   constructor(status, body) {

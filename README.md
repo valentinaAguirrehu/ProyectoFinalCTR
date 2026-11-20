@@ -80,6 +80,10 @@ Abrir <http://127.0.0.1:5500>. La pantalla permite cambiar la dirección de la A
 
 Documentación del módulo: [docs/frontend.md](docs/frontend.md).
 
+## Despliegue
+
+Frontend en Vercel y API en Render: [docs/despliegue.md](docs/despliegue.md).
+
 ## Integrantes
 Leidy valentina aguirre 
 Angie Fernanda Benavides

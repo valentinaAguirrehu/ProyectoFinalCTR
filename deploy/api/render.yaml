@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ctr-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: CTR_CORS_ORIGINS
+        value: "*"

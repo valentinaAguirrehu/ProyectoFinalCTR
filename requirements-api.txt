@@ -1,0 +1,10 @@
+# Dependencias mínimas para ejecutar la API en producción (Hugging Face Spaces).
+# Versiones fijadas a las usadas al entrenar: model.joblib exige la misma versión de scikit-learn.
+fastapi==0.163.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.3
+catboost==1.2.10
+scikit-learn==1.9.1
+pandas==3.1.1
+numpy==2.5.4
+joblib==1.6.0
